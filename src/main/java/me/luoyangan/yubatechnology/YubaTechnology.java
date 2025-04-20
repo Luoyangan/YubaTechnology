@@ -1,4 +1,4 @@
-package me.CHANGEME.slimefunaddon;
+package me.luoyangan.yubatechnology;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,10 +13,17 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
-public class ExampleAddon extends JavaPlugin implements SlimefunAddon {
+public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onEnable() {
+
+        getLogger().info("########################################");
+        getLogger().info("        YubaTechnology - 腐竹科技         ");
+        getLogger().info("            作者: Luoyangan              ");
+        getLogger().info("          QQ交流群: 812500721            ");
+        getLogger().info("########################################");
+
         // 从 config.yml 中读取插件配置
         Config cfg = new Config(this);
 
@@ -47,7 +54,11 @@ public class ExampleAddon extends JavaPlugin implements SlimefunAddon {
          * 它代表了一个3x3的有序合成配方。
          * 该配方所需的机器将在后面通过RecipeType指定。
          */
-        ItemStack[] recipe = { new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.DIAMOND), null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD) };
+        ItemStack[] recipe = {
+                new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD),
+                null, new ItemStack(Material.DIAMOND), null,
+                new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD)
+        };
 
         /*
          * 4. 注册物品
