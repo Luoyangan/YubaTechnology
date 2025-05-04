@@ -2,9 +2,15 @@ package me.luoyangan.yubatechnology;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.Plugin;
 
@@ -16,6 +22,7 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.logging.Level;
 
 public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
@@ -50,7 +57,9 @@ public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
          * 1. 创建分类
          * 分类的显示物品将使用以下物品
          */
-        ItemStack itemGroupItem = new CustomItemStack(Material.DIAMOND, "&x&d&9&a&f&d&9腐&x&c&3&b&d&d&c竹&x&a&d&c&b&d&e科&x&9&7&d&9&e&1技");
+        ItemStack itemGroupItem = new CustomItemStack(
+                SlimefunUtils.getCustomHead("818cfff452b0ed6f2f9c2b7a91aa9f1640703d62a774b7fc52c6500b533edbfa"),
+                "&x&d&9&a&f&d&9腐&x&c&3&b&d&d&c竹&x&a&d&c&b&d&e科&x&9&7&d&9&e&1技");
 
         // 给你的分类提供一个独一无二的ID
         NamespacedKey itemGroupId = new NamespacedKey(this, "yubatechnology");
@@ -58,19 +67,25 @@ public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
 
         Plugin soulJars = getServer().getPluginManager().getPlugin("SoulJars");
         if (soulJars != null && soulJars.isEnabled()) {
-            ItemStack itemGroupItem1 = new CustomItemStack(Material.GHAST_SPAWN_EGG, "&x&d&9&a&f&d&9腐&x&c&3&b&d&d&c竹&x&a&d&c&b&d&e科&x&9&7&d&9&e&1技 &f- &00e0ff刷怪蛋");
+            ItemStack itemGroupItem1 = new CustomItemStack(
+                    Material.GHAST_SPAWN_EGG,
+                    "&x&d&9&a&f&d&9腐&x&c&3&b&d&d&c竹&x&a&d&c&b&d&e科&x&9&7&d&9&e&1技 &f- &x&0&0&e&0&f&f刷&x&0&0&e&0&f&f怪&x&0&0&e&0&f&f蛋"
+            );
             NamespacedKey itemGroupId1 = new NamespacedKey(this, "yubatechnology_spawn");
             ItemGroup itemGroup1 = new ItemGroup(itemGroupId1, itemGroupItem1);
 
 
-            SlimefunItemStack slimefunItem1 = new SlimefunItemStack("FZKJ_SPAWN_A", Material.GHAST_SPAWN_EGG, "&f空白刷怪蛋", "&7制作刷怪蛋的材料之一");
-
+            SlimefunItemStack slimefunItem1 = new SlimefunItemStack(
+                    "FZKJ_SPAWN_A",
+                    Material.GHAST_SPAWN_EGG,
+                    "§f空白刷怪蛋",
+                    "&7制作刷怪蛋的材料之一"
+            );
             ItemStack[] recipe1= {
                     SlimefunItems.BLANK_RUNE, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.BLANK_RUNE,
                     SlimefunItems.MAGICAL_GLASS, SlimefunItem.getById("SOUL_JAR").getItem(), SlimefunItems.MAGICAL_GLASS,
                     SlimefunItems.BLANK_RUNE, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.BLANK_RUNE
             };
-
             SlimefunItem item1 = new SlimefunItem(itemGroup1, slimefunItem1, RecipeType.ANCIENT_ALTAR, recipe1);
             item1.register(this);
         }
@@ -125,4 +140,25 @@ public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
         return this;
     }
 
+    /*
+     * 监听玩家交互事件，当玩家使用空白刷怪蛋时取消该事件
+     * @param event 玩家交互事件对象
+     */
+    /*@EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+
+        Player player = event.getPlayer();
+        ItemStack item = event.getItem();
+
+        // 检查玩家手中的物品是否为空白刷怪蛋
+        if (item != null && item.isSimilar(FZKJ_SPAWN_A)) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null && meta.getDisplayName().equals("§f空白刷怪蛋")) {
+                // 取消事件，阻止玩家使用物品
+                event.setCancelled(true);
+                // 给玩家发送提示信息
+                player.sendMessage("该刷怪蛋是空白的，需封装灵魂后才能使用");
+            }
+        }
+    }*/
 }
