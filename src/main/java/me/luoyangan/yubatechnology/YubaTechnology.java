@@ -5,12 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.Plugin;
 
@@ -18,14 +13,14 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.logging.Level;
 
 public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
+
+    public static ItemStack FZKJ_SPAWN_B;
 
     @Override
     public void onEnable() {
@@ -37,11 +32,21 @@ public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
             // 你可以在这里添加自动更新功能
         }
 
+        //  SEVERE（严重错误）severe
+        //  WARNING（警告）warning
+        //  INFO（信息）info
+        //  CONFIG（配置）config
+        //  FINE（详细信息）fine
+        //  FINER（更详细的信息）finer
+        //  FINEST（最详细的信息）finest
+
+        getLogger().info("");
         getLogger().info("########################################");
         getLogger().info("        YubaTechnology - 腐竹科技         ");
         getLogger().info("            作者: Luoyangan              ");
         getLogger().info("            QQ群: 812500721              ");
         getLogger().info("########################################");
+        getLogger().info("");
 
         // 检查 SoulJars 插件是否加载
         if (!getServer().getPluginManager().isPluginEnabled("SoulJars")) {
@@ -50,7 +55,7 @@ public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
             getServer().getPluginManager().disablePlugin(this);
             return;
         } else {
-            getLogger().severe("灵魂罐(SoulJars) 插件已加载");
+            getLogger().warning("灵魂罐(SoulJars) 插件已加载");
         }
 
         /*
@@ -65,30 +70,49 @@ public class YubaTechnology extends JavaPlugin implements SlimefunAddon {
         NamespacedKey itemGroupId = new NamespacedKey(this, "yubatechnology");
         ItemGroup itemGroup = new ItemGroup(itemGroupId, itemGroupItem);
 
+
         Plugin soulJars = getServer().getPluginManager().getPlugin("SoulJars");
         if (soulJars != null && soulJars.isEnabled()) {
-            ItemStack itemGroupItem1 = new CustomItemStack(
-                    Material.GHAST_SPAWN_EGG,
+            ItemStack itemGroupItem1 = new CustomItemStack(Material.GHAST_SPAWN_EGG,
                     "&x&d&9&a&f&d&9腐&x&c&3&b&d&d&c竹&x&a&d&c&b&d&e科&x&9&7&d&9&e&1技 &f- &x&0&0&e&0&f&f刷&x&0&0&e&0&f&f怪&x&0&0&e&0&f&f蛋"
             );
             NamespacedKey itemGroupId1 = new NamespacedKey(this, "yubatechnology_spawn");
             ItemGroup itemGroup1 = new ItemGroup(itemGroupId1, itemGroupItem1);
 
 
-            SlimefunItemStack slimefunItem1 = new SlimefunItemStack(
-                    "FZKJ_SPAWN_A",
-                    Material.GHAST_SPAWN_EGG,
+            SlimefunItemStack slimefunItem1 = new SlimefunItemStack("FZKJ_SPAWN_A", Material.GHAST_SPAWN_EGG,
                     "§f空白刷怪蛋",
                     "&7制作刷怪蛋的材料之一"
             );
+            SlimefunItemStack slimefunItem2 = new SlimefunItemStack("FZKJ_SPAWN_B", Material.ZOMBIE_SPAWN_EGG,
+                    "§f僵尸刷怪蛋",
+                    ""
+            );
+            SlimefunItemStack slimefunItem3 = new SlimefunItemStack("FZKJ_SPAWN_C", Material.CHICKEN_SPAWN_EGG,
+                    "§f鸡刷怪蛋",
+                    ""
+            );
+
             ItemStack[] recipe1= {
                     SlimefunItems.BLANK_RUNE, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.BLANK_RUNE,
                     SlimefunItems.MAGICAL_GLASS, SlimefunItem.getById("SOUL_JAR").getItem(), SlimefunItems.MAGICAL_GLASS,
                     SlimefunItems.BLANK_RUNE, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.BLANK_RUNE
             };
+            ItemStack[] recipe2= {
+                    null, null, null,
+                    null, null, null,
+                    null, null, null
+            };
+
             SlimefunItem item1 = new SlimefunItem(itemGroup1, slimefunItem1, RecipeType.ANCIENT_ALTAR, recipe1);
+            SlimefunItem item2 = new SlimefunItem(itemGroup1, slimefunItem2, null, recipe2);
+            SlimefunItem item3 = new SlimefunItem(itemGroup1, slimefunItem3, null, recipe2);
+
             item1.register(this);
+            item2.register(this);
+            item3.register(this);
         }
+
 
         /*
          * 2. 创建一个 SlimefunItemStack
